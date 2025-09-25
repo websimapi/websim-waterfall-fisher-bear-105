@@ -90,8 +90,10 @@ function startGame() {
 export function startGameWithTurnaround() {
     if (__startingSequence) return;
     __startingSequence = true;
+    TWEEN.removeAll(); // cancel any ongoing walk-in/wobble tweens to avoid double-rotations
     const proceed = () => {
         if (showcaseBear && showcaseBear.visible) {
+            showcaseBear.rotation.y = 0; // normalize facing before rotating to 180°
             const baseY = 4.65, dur = 900;
             const easeRot = TWEEN.Easing?.Cubic?.InOut || ((k)=>k);
             const easeWob = TWEEN.Easing?.Sine?.InOut || ((k)=>k);
