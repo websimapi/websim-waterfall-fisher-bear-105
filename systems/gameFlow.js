@@ -88,6 +88,11 @@ function startGame() {
 }
 
 export function startGameWithTurnaround() {
+    if (window.__showcaseWalkInInProgress) {
+        const handler = () => startGameWithTurnaround();
+        window.addEventListener('showcase:walkin:done', handler, { once: true });
+        return;
+    }
     if (__startingSequence) return;
     __startingSequence = true;
     TWEEN.removeAll(); // cancel any ongoing walk-in/wobble tweens to avoid double-rotations
