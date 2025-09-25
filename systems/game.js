@@ -56,7 +56,13 @@ export function initGame() {
     setupStartScreen(isFirstLoad);
     isFirstLoad = false;
     // start with turnaround sequence before gameplay
-    startButton.addEventListener('click', startGameWithTurnaround);
+    startButton.addEventListener('click', () => {
+        if (!window.__canQuickStart) {
+            window.addEventListener('showcase:ready', () => startGameWithTurnaround(), { once: true });
+            return;
+        }
+        startGameWithTurnaround();
+    });
     wireAudioUnlock(() => { initAudio(); import('./audio.js').then(m=>m.startWaterfall?.()); });
 }
 
