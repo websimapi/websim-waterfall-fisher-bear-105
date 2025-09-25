@@ -82,6 +82,9 @@ function startGame() {
 
     createGameBear();
     try { startRecording(renderer.domElement); } catch {}
+    // notify listeners that gameplay has begun (for quick-start drag carry-over)
+    window.dispatchEvent(new CustomEvent('game:started'));
+
 }
 
 export function startGameWithTurnaround() {

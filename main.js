@@ -226,6 +226,15 @@ function onQuickStartTap(e) {
     const n = h.object?.name || h.object?.parent?.name || '';
     return n === 'log' || n === 'bear' || n === 'showcase-bear';
   });
-  if (hit) startGameWithTurnaround();
+  if (hit) {
+    const x = src.clientX, y = src.clientY;
+    startGameWithTurnaround();
+    window.addEventListener('game:started', () => {
+      const pd = new PointerEvent('pointerdown', { clientX: x, clientY: y, bubbles: true });
+      const pm = new PointerEvent('pointermove', { clientX: x, clientY: y, bubbles: true });
+      window.dispatchEvent(pd);
+      window.dispatchEvent(pm);
+    }, { once: true });
+  }
 }
 window.addEventListener('pointerdown', onQuickStartTap);
