@@ -228,12 +228,22 @@ function onQuickStartTap(e) {
   });
   if (hit) {
     const x = src.clientX, y = src.clientY;
+    if (!window.__canQuickStart) {
+      window.addEventListener('showcase:ready', () => {
+        startGameWithTurnaround();
+        window.addEventListener('game:started', () => {
+          const pd = new PointerEvent('pointerdown', { clientX: x, clientY: y, bubbles: true });
+          const pm = new PointerEvent('pointermove', { clientX: x, clientY: y, bubbles: true });
+          window.dispatchEvent(pd); window.dispatchEvent(pm);
+        }, { once: true });
+      }, { once: true });
+      return;
+    }
     startGameWithTurnaround();
     window.addEventListener('game:started', () => {
       const pd = new PointerEvent('pointerdown', { clientX: x, clientY: y, bubbles: true });
       const pm = new PointerEvent('pointermove', { clientX: x, clientY: y, bubbles: true });
-      window.dispatchEvent(pd);
-      window.dispatchEvent(pm);
+      window.dispatchEvent(pd); window.dispatchEvent(pm);
     }, { once: true });
   }
 }
