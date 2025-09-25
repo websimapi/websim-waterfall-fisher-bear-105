@@ -214,7 +214,7 @@ tipSubmit?.addEventListener('click', async ()=>{
 const qsRay = new THREE.Raycaster();
 const qsPt = new THREE.Vector2();
 function onQuickStartTap(e) {
-  if (gameState.current === 'PLAYING') return;
+  if (gameState.current === 'PLAYING' || gameState.current === 'GAME_OVER') return;
   const src = e.changedTouches ? e.changedTouches[0] : e;
   const tag = (e.target && e.target.tagName) || '';
   if (tag === 'BUTTON') return;
